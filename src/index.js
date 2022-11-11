@@ -1,29 +1,16 @@
-import { createStore } from 'redux';
+import React from "react";
+import ReactDOM from 'react-dom/client';
+import App from "./components/App";
+import { BrowserRouter } from 'react-router-dom';
+/** redux 사용에 필요 */
+import { Provider } from "react-redux";
+import store from './store';
 
-const form = document.querySelector("form");
-const input = document.querySelector("input");
-const ul = document.querySelector("ul");
-
-const reducer = (state = [], action) => {
-  switch (action.type) {
-    case "ADD_TODO":
-      return [...state, { text: action.text, id: action.id }]
-    case "DELETE_TODO":
-      return []
-    default:
-      return state;
-  }
-
-
-}
-
-const store = createStore(reducer);
-
-const onSubmit = e => {
-  e.preventDefault();
-  const toDo = input.value;
-  input.value = "";
-  store.dispatch({ type: "ADD_TODO", text: toDo, id: Date.now() });
-}
-
-form.addEventListener("submit", onSubmit);
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>
+);
